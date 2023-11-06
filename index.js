@@ -1,24 +1,8 @@
-const Shopify = require("shopify-api-node");
-require('dotenv').config();
 
-const shopify = new Shopify({
-  shopName: process.env.shopName,
-  accessToken: process.env.accessToken,
-});
+const connectTODatabase = require("./database/database");
+const  {syncProduct,upsertProduct}  = require("./services/fetchProduct.service");
+require("dotenv").config();
 
-(async () => {
-  let params = { limit: 10 };
-  let allProducts = [];
+connectTODatabase();
 
-  do {
-    const products = await shopify.product.list(params);
-    products.map( (value)=>allProducts.push(value));
-
-    console.log(allProducts);
-    console.log({ length: allProducts.length });
-
-    params = products.nextPageParameters;
-
-    console.log({ params });
-  } while (params !== undefined);
-})().catch(console.error);
+const syncResponse = syncProduct();
