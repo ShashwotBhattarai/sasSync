@@ -10,15 +10,13 @@ async function syncProduct() {
     accessToken: process.env.ACCESSTOKEN,
   });
 
-    let params = { limit: 20 };
+  let params = { limit: 20 };
 
-    do {
-      const products = await shopify.product.list(params);
-      params = products.nextPageParameters;
-      upsertProduct(products);
-      
-    } while (params !== undefined);
-  
+  do {
+    const products = await shopify.product.list(params);
+    params = products.nextPageParameters;
+    upsertProduct(products);
+  } while (params !== undefined);
 }
 
 async function upsertProduct(allProducts) {
