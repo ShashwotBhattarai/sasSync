@@ -33,4 +33,5 @@ async function upsertProduct(allProducts) {
   console.log(res);
 }
 
+
 module.exports = { syncProduct, upsertProduct };
